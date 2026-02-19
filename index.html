@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+  }
+
+  a.widget-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .widget {
+    background: #171717;
+    border-radius: 10px;
+    padding: 18px 28px;
+    text-align: center;
+    border: 1px solid #333;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .widget:hover { border-color: #ce6503; }
+
+  .label {
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  .units {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .num {
+    font-size: 42px;
+    font-weight: bold;
+    color: #E65035;
+    line-height: 1;
+    min-width: 60px;
+    letter-spacing: 2px;
+  }
+
+  .sep {
+    font-size: 32px;
+    color: #ce6503;
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .unit-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #fff;
+    opacity: 0.5;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .finished {
+    color: #ce6503;
+    font-size: 20px;
+    letter-spacing: 3px;
+  }
+</style>
+</head>
+<body>
+<a class="widget-link" href="https://braxtech.net" target="_blank">
+  <div class="widget">
+    <div class="label">OPEN_SLATE LAUNCH COUNTDOWN</div>
+    <div class="units" id="units">
+      <div class="unit"><div class="num" id="days">00</div><div class="unit-label">Days</div></div>
+      <div class="sep">:</div>
+      <div class="unit"><div class="num" id="hours">00</div><div class="unit-label">Hours</div></div>
+      <div class="sep">:</div>
+      <div class="unit"><div class="num" id="mins">00</div><div class="unit-label">Minutes</div></div>
+      <div class="sep">:</div>
+      <div class="unit"><div class="num" id="secs">00</div><div class="unit-label">Seconds</div></div>
+    </div>
+  </div>
+</a>
+
+<script>
+  const target = new Date('2026-02-24T11:30:00-08:00'); // California time
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('units').innerHTML = '<div class="finished">EVENT STARTED</div>';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('days').textContent = pad(d);
+    document.getElementById('hours').textContent = pad(h);
+    document.getElementById('mins').textContent = pad(m);
+    document.getElementById('secs').textContent = pad(s);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
